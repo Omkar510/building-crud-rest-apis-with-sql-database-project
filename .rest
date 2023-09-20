@@ -1,0 +1,34 @@
+
+###
+
+POST http://localhost:8080/api/users/createUser
+Content-Type: application/json
+
+{
+    "firstName": "Swapnil",
+    "lastName": "Suvare",
+    "email": "swapnilsuvare@example.com"
+}
+
+###
+
+GET http://localhost:8080/api/users/3
+
+###
+
+GET http://localhost:8080/api/users
+
+###
+
+PUT http://localhost:8080/api/users/1
+Content-Type: application/json
+
+{
+    "firstName": "Omkar",
+    "lastName": "Suvare",
+    "email": "omkar@example.com"
+}
+
+###
+
+DELETE http://localhost:8080/api/users/2
