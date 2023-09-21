@@ -5,9 +5,9 @@ POST http://localhost:8080/api/users/createUser
 Content-Type: application/json
 
 {
-    "firstName": "Swapnil",
+    "firstName": "Omkar",
     "lastName": "Suvare",
-    "email": "swapnilsuvare@example.com"
+    "email": "omkarsuvare@example.com"
 }
 
 ###
@@ -20,7 +20,7 @@ GET http://localhost:8080/api/users
 
 ###
 
-PUT http://localhost:8080/api/users/1
+PUT http://localhost:8080/api/users/4
 Content-Type: application/json
 
 {

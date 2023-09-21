@@ -2,17 +2,17 @@ package net.javaguides.buildingcrudrestapiswithsqldatabaseproject.users.service;
 
 import java.util.List;
 
-import net.javaguides.buildingcrudrestapiswithsqldatabaseproject.users.entity.UserEntity;
+import net.javaguides.buildingcrudrestapiswithsqldatabaseproject.users.dto.UserDto;
 
 public interface UserService {
     
-    UserEntity createUser(UserEntity userEntity);
+    UserDto createUser(UserDto userDto);
 
-    UserEntity getUserById(Long userId);
+    UserDto getUserById(Long userId);
 
-    List<UserEntity> getAllUsers();
+    List<UserDto> getAllUsers();
 
-    UserEntity updateUser(UserEntity userEntity);
+    UserDto updateUser(UserDto userDto);
 
     String deleteUser(Long userId);
 }

@@ -1,11 +1,15 @@
 package net.javaguides.buildingcrudrestapiswithsqldatabaseproject.users.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
+import net.javaguides.buildingcrudrestapiswithsqldatabaseproject.users.dto.UserDto;
 import net.javaguides.buildingcrudrestapiswithsqldatabaseproject.users.entity.UserEntity;
+import net.javaguides.buildingcrudrestapiswithsqldatabaseproject.users.mapper.UserMapper;
 import net.javaguides.buildingcrudrestapiswithsqldatabaseproject.users.repository.UserRepository;
 import net.javaguides.buildingcrudrestapiswithsqldatabaseproject.users.service.UserService;
 
@@ -16,30 +20,50 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public UserEntity createUser(UserEntity userEntity) {
-        return userRepository.save(userEntity);
+    public UserDto createUser(UserDto userDto) {
+
+        // Convert UserDto Into User JPA Entity
+
+        UserEntity userEntity = UserMapper.mapToUserEntity(userDto);
+
+        userEntity = userRepository.save(userEntity);
+
+        // Convert User JPA Entity Into UserDto
+
+        userDto = UserMapper.mapToUserDto(userEntity);
+
+        return userDto;
     }
 
     @Override
-    public UserEntity getUserById(Long userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found...."));
+    public UserDto getUserById(Long userId) {
+
+        UserDto userDto = UserMapper.mapToUserDto(
+                userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found....")));
+
+        return userDto;
     }
 
     @Override
-    public List<UserEntity> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserDto> getAllUsers() {
+
+        List<UserEntity> userEntities = userRepository.findAll();
+
+        return userEntities.stream().map(data -> UserMapper.mapToUserDto(data)).collect(Collectors.toList());
     }
 
     @Override
-    public UserEntity updateUser(UserEntity userEntity) {
+    public UserDto updateUser(UserDto userDto) {
 
-        UserEntity existingUserEntity = userRepository.findById(userEntity.getId()).get();
+        UserEntity existingUserEntity = userRepository.findById(userDto.getId()).get();
 
-        existingUserEntity.setFirstName(userEntity.getFirstName());
-        existingUserEntity.setLastName(userEntity.getLastName());
-        existingUserEntity.setEmail(userEntity.getEmail());
+        existingUserEntity.setFirstName(userDto.getFirstName());
+        existingUserEntity.setLastName(userDto.getLastName());
+        existingUserEntity.setEmail(userDto.getEmail());
 
-        return userRepository.save(existingUserEntity);
+        existingUserEntity = userRepository.save(existingUserEntity);
+
+        return UserMapper.mapToUserDto(existingUserEntity);
     }
 
     @Override
