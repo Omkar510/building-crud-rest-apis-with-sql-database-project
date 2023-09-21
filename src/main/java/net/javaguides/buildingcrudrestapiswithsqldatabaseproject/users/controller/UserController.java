@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
 import net.javaguides.buildingcrudrestapiswithsqldatabaseproject.users.dto.UserDto;
-import net.javaguides.buildingcrudrestapiswithsqldatabaseproject.users.entity.UserEntity;
 import net.javaguides.buildingcrudrestapiswithsqldatabaseproject.users.service.UserService;
 
 @RestController
