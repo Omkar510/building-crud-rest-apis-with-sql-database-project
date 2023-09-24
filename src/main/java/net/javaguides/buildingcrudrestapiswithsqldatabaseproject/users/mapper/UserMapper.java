@@ -4,13 +4,13 @@ import net.javaguides.buildingcrudrestapiswithsqldatabaseproject.users.dto.UserD
 import net.javaguides.buildingcrudrestapiswithsqldatabaseproject.users.entity.UserEntity;
 
 public class UserMapper {
-    
+
     // Convert User JPA Entity Into UserDto
 
     public static UserDto mapToUserDto(UserEntity userEntity) {
 
         UserDto userDto = new UserDto(userEntity.getId(), userEntity.getFirstName(), userEntity.getLastName(),
-        userEntity.getEmail());
+                userEntity.getEmail());
 
         return userDto;
 
@@ -20,8 +20,8 @@ public class UserMapper {
 
     public static UserEntity mapToUserEntity(UserDto userDto) {
 
-        UserEntity userEntity = new UserEntity(userDto.getId(), userDto.getFirstName(), userDto.getLastName(),
-                userDto.getEmail());
+        UserEntity userEntity = new UserEntity(userDto.getUserId(), userDto.getFirstName(), userDto.getLastName(),
+                userDto.getEmailAddress());
 
         return userEntity;
     }
