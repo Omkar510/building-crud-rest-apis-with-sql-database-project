@@ -21,7 +21,7 @@ import net.javaguides.buildingcrudrestapiswithsqldatabaseproject.users.service.U
 @AllArgsConstructor
 @RequestMapping("/api/users")
 public class UserController {
-    
+
     private UserService userService;
 
     // build create User REST API
@@ -30,7 +30,6 @@ public class UserController {
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
         return new ResponseEntity<UserDto>(userService.createUser(userDto), HttpStatus.CREATED);
     }
-
 
     // build get user by id REST API
     // http://localhost:8080/api/users/1

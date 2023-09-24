@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
+import net.javaguides.buildingcrudrestapiswithsqldatabaseproject.exception.EmailAlreadyExistsException;
+import net.javaguides.buildingcrudrestapiswithsqldatabaseproject.exception.ResourceNotFoundException;
 import net.javaguides.buildingcrudrestapiswithsqldatabaseproject.users.dto.UserDto;
 import net.javaguides.buildingcrudrestapiswithsqldatabaseproject.users.entity.UserEntity;
 import net.javaguides.buildingcrudrestapiswithsqldatabaseproject.users.mapper.AutoUserMapper;
@@ -28,6 +30,9 @@ public class UserServiceImpl implements UserService {
         // UserEntity userEntity = UserMapper.mapToUserEntity(userDto);
 
         // UserEntity userEntity = modelMapper.map(userDto, UserEntity.class);
+
+        if (userRepository.existsByEmail(userDto.getEmailAddress()))
+            throw new EmailAlreadyExistsException("Email Already Exists for User");
 
         UserEntity userEntity = AutoUserMapper.MAPPER.mapToUser(userDto);
 
@@ -57,7 +62,8 @@ public class UserServiceImpl implements UserService {
         // UserDto.class);
 
         UserDto userDto = AutoUserMapper.MAPPER.mapToUserDto(
-                userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found....")));
+                userRepository.findById(userId)
+                        .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId, "USER_NOT_FOUND")));
 
         return userDto;
     }
@@ -81,8 +87,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto updateUser(UserDto userDto) {
 
-        UserEntity existingUserEntity = userRepository.findById(userDto.getUserId()).get();
-
+        UserEntity existingUserEntity = userRepository.findById(userDto.getUserId())
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userDto.getUserId(), "USER_NOT_FOUND"));
         existingUserEntity.setFirstName(userDto.getFirstName());
         existingUserEntity.setLastName(userDto.getLastName());
         existingUserEntity.setEmail(userDto.getEmailAddress());
@@ -99,7 +105,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public String deleteUser(Long userId) {
 
-        userRepository.deleteById(userId);
+        UserEntity userEntity = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId, "USER_NOT_FOUND"));
+
+        userRepository.delete(userEntity);
 
         return "User Deleted Successfully";
     }
