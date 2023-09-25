@@ -5,9 +5,9 @@ POST http://localhost:8080/api/users/createUser
 Content-Type: application/json
 
 {
-    "firstName": "Dipraj",
+    "firstName": "Bhakti",
     "lastName": "Dhumak",
-    "emailAddress": "dd@example.com"
+    "emailAddress": "bd@example.com"
 }
 
 ###

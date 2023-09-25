@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import net.javaguides.buildingcrudrestapiswithsqldatabaseproject.users.dto.UserDto;
 import net.javaguides.buildingcrudrestapiswithsqldatabaseproject.users.service.UserService;
@@ -27,7 +28,7 @@ public class UserController {
     // build create User REST API
 
     @PostMapping("/createUser")
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> createUser(@RequestBody @Valid UserDto userDto) {
         return new ResponseEntity<UserDto>(userService.createUser(userDto), HttpStatus.CREATED);
     }
 
@@ -51,7 +52,7 @@ public class UserController {
     // http://localhost:8080/api/users/1
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long userId, @RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long userId, @RequestBody @Valid UserDto userDto) {
 
         userDto.setUserId(userId);
 

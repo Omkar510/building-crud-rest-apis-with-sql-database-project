@@ -11,7 +11,9 @@ import lombok.NoArgsConstructor;
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class ResourceNotFoundException extends RuntimeException {
     
-    private String resourceName;
+    private static final long serialVersionUID = 6841243381667144643L;
+
+	private String resourceName;
 
     private String fieldName;
 
